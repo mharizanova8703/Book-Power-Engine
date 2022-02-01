@@ -13,7 +13,7 @@ import Auth from '../utils/auth'
 import { searchGoogleBooks } from '../utils/API'
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage'
 import { SAVE_BOOK } from '../utils/mutations'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 
 const SearchBooks = () => {
   // create state for holding returned google api data
@@ -23,23 +23,7 @@ const SearchBooks = () => {
 
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds())
-
-  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
-  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
-  useEffect(() => {
-    return () => saveBookIds(savedBookIds)
-  })
-}
-
-const SearchBooks = () => {
-  // create state for holding returned google api data
-  const [searchedBooks, setSearchedBooks] = useState([])
-  // create state for holding our search field data
-  const [searchInput, setSearchInput] = useState('')
-
-  // create state to hold saved bookId values
-  const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds())
-
+  const [saveBook] = useMutation(SAVE_BOOK)
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
@@ -49,8 +33,6 @@ const SearchBooks = () => {
       // isMounted = false;
     }
   })
-
-  const [saveBook, { error }] = useMutation(SAVE_BOOK)
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -97,15 +79,15 @@ const SearchBooks = () => {
     }
 
     try {
-      const response = await saveBook({
+      const { data } = await saveBook({
         variables: {
-          input: bookToSave,
+          bookData: { ...bookToSave },
         },
       })
-
-      if (!response) {
-        throw new Error('something went wrong!')
-      }
+      console.log(data)
+      // if (!response) {
+      //   throw new Error('something went wrong!')
+      // }
 
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId])
@@ -113,7 +95,6 @@ const SearchBooks = () => {
       console.error(err)
     }
   }
-
   return (
     <>
       <Jumbotron fluid className="text-light bg-dark">

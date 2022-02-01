@@ -15,9 +15,8 @@
   "author": "Mariya Harizanova",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^5.1.0"
+    "concurrently": "^7.0.0"
   },
-  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mharizanova8703/Book-Power-Engine.git"

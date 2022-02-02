@@ -1,6 +1,4 @@
-
-   
-import gql from "graphql-tag";
+import gql from 'graphql-tag'
 
 export const GET_ME = gql`
   {
@@ -8,7 +6,8 @@ export const GET_ME = gql`
       _id
       username
       email
-
+      password
+      bookCount
       savedBooks {
         title
         bookId
@@ -19,4 +18,4 @@ export const GET_ME = gql`
       }
     }
   }
-`;
+`

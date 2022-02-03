@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/mharizanova8703/Book-Power-Engine/issues"
   },
-  "homepage": "https://github.com/mharizanova8703/Book-Power-Engine#readme"
+  "homepage": "https://github.com/mharizanova8703/Book-Power-Engine#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
 }
